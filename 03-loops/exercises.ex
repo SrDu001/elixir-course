@@ -25,21 +25,57 @@
 # . ......1 #n lines
 # ´´´
 
-defmodule Binary do
-  def bin(n) when n > 0  do
-    IO.puts("Hola" + "a")
+
+defmodule SomeFunction do
+  def thrd(a, b) when a == 0 or b == b do
+    thrd(a - 1, b - 1) + 2 * a - 1
   end
 
+  def thrd(a, b) when a == b do
+    thrd(a - 1, b - 1) + 2 * a - 1
+  end
 
+  def thrd(a, b) when a > b do
+    thrd(a, a) + thrd(b - a, a)
+  end
+
+  def thrd(a, b) when a < b do
+    thrd(a, a) + thrd(b - a, a)
+  end
+end
+
+
+defmodule Pyramid do
+  def pir(n) do
+    pirp(0, n, "")
+  end
+
+  defp pirp(c, n, s) when c <= n do
+    cond do
+      c == n ->
+        IO.puts("end")
+
+      rem(String.length(s), 2) == 0 ->
+        add(c, n, "1#{s}")
+
+      true ->
+        add(c, n, "0#{s}")
+    end
+  end
+
+  defp add(c, n, res) do
+    IO.puts(res)
+    pirp(c + 1, n, res)
+  end
 end
 
 defmodule Fibonacci do
-  def fibo(n) when n < 2  do
+  def fibo(n) when n < 2 do
     n
   end
 
   def fibo(n) do
-   fibo(n - 1) + fibo(n - 2)
+    fibo(n - 1) + fibo(n - 2)
   end
 end
 
@@ -51,15 +87,18 @@ defmodule ConSum do
   defp consump(c, s, n) do
     s = s + 1
     c = c + s
+
     cond do
       s == n ->
         IO.puts(c)
+
       true ->
         consump(c, s, n)
     end
   end
 end
 
-ConSum.consum(2)
-IO.puts(Fibonacci.fibo(11))
-Binary.bin(1)
+# ConSum.consum(2)
+# IO.puts(Fibonacci.fibo(11))
+# Pyramid.pir(5)
+IO.puts(SomeFunction.thrd(5,5))
