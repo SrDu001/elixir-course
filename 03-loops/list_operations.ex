@@ -1,33 +1,39 @@
 defmodule ListOperations do
-  def sum(array) when is_list(array), do: sump(0, 0, array)
+  def sum(list) when is_list(list), do: sump(0, 0, list)
 
-  defp sump(n, sum, array) do
-    if n < length(array), do: sump(n + 1, sum + Enum.at(array, n), array), else: IO.puts(sum)
+  defp sump(n, sum, list) do
+    if n < length(list), do: sump(n + 1, sum + Enum.at(list, n), list), else: sum
   end
 
-  def reverse(array) when is_list(array), do: reversep(array, length(array) - 1, [])
+  def reverse(list) when is_list(list), do: reversep(list, length(list) - 1, [])
 
-  defp reversep(array, n, reversedArray) do
+  defp reversep(list, n, reversedList) do
     if n >= 0 do
-      reversedArray = reversedArray ++ [Enum.at(array, n)]
-      reversep(array, n - 1, reversedArray)
+      reversedList = reversedList ++ [Enum.at(list, n)]
+      reversep(list, n - 1, reversedList)
     else
-      IO.inspect(reversedArray)
+      reversedList
     end
   end
 
-  def is_ascendant(array) when is_list(array), do: is_ascendantp(Enum.at(array, 0), Enum.at(array, 1))
+  def is_ascendant?(list) when is_list(list), do: is_ascendantp(Enum.at(list, 0), Enum.at(list, 1), list, 1)
 
-  defp is_ascendantp(p, n) do
+  defp is_ascendantp(p, n, list, c) do
     cond do
-      p < n -> true
-      p > n -> false
-      true -> false
+      p < n ->
+        is_ascendantp(n, Enum.at(list, c + 1), list, c + 1)
+      p > n ->
+        false
+      true -> true
     end
   end
 end
 
-ListOperations.sum([1, 2, 3, 8, 9])
-ListOperations.reverse([1, 2, 3, 6, 9])
-ListOperations.is_ascendant([1, 2, 3, 6, 9])
-# IO.inspect [1, 2, 3, 8, 9]
+IO.puts ListOperations.sum([1, 2, 3, 8, 9])
+IO.inspect ListOperations.reverse([])
+IO.inspect ListOperations.reverse([1, 2, 3, 6, 9])
+IO.inspect ListOperations.is_ascendant?([6, 1])
+IO.puts ListOperations.is_ascendant?([1, 2, 3, 4, 8])
+IO.puts ListOperations.is_ascendant?([8, 1, 3, 4, 5])
+IO.puts ListOperations.is_ascendant?([])
+IO.puts ListOperations.is_ascendant?([89])
