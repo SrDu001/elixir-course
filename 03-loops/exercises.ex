@@ -24,26 +24,26 @@
 # .
 # . ......1 #n lines
 # ´´´
-
-
-defmodule SomeFunction do
-  def thrd(a, b) when a == 0 or b == b do
-    thrd(a - 1, b - 1) + 2 * a - 1
+defmodule Gcd do
+  def gcd(a, b) when is_integer(a) and a >= 0 and is_integer(b) and b >= 0 do
+    gcdp(a, b)
   end
 
-  def thrd(a, b) when a == b do
-    thrd(a - 1, b - 1) + 2 * a - 1
-  end
-
-  def thrd(a, b) when a > b do
-    thrd(a, a) + thrd(b - a, a)
-  end
-
-  def thrd(a, b) when a < b do
-    thrd(a, a) + thrd(b - a, a)
-  end
+  def gcdp(a, b) when b == 0, do: a
+  def gcdp(a, b) when b > a, do: gcd(b, a)
+  def gcdp(a, b), do: gcdp(a - b, b)
 end
 
+defmodule SomeFunction do
+  def call(a, b) when is_integer(a) and is_integer(b) and a >= 0 and b >= 0 do
+    thrd(a, b)
+  end
+
+  defp thrd(0, 0), do: 0
+  defp thrd(a, b) when a == b, do: thrd(a - 1, b - 1) + 2 * a - 1
+  defp thrd(a, b) when a > b, do: thrd(a - b, b) + thrd(b, b)
+  defp thrd(a, b), do: thrd(a, a) + thrd(b - a, a)
+end
 
 defmodule Pyramid do
   def pir(n) do
@@ -70,16 +70,11 @@ defmodule Pyramid do
 end
 
 defmodule Fibonacci do
-  def fibo(n) when n < 2 do
-    n
-  end
-
-  def fibo(n) do
-    fibo(n - 1) + fibo(n - 2)
-  end
+  def fibo(n) when n < 2, do: n
+  def fibo(n) when n > 0, do: fibo(n - 1) + fibo(n - 2)
 end
 
-defmodule ConSum do
+defmodule Sumatory do
   def consum(n) when n > 0 do
     consump(0, 0, n)
   end
@@ -98,7 +93,7 @@ defmodule ConSum do
   end
 end
 
-# ConSum.consum(2)
-# IO.puts(Fibonacci.fibo(11))
-# Pyramid.pir(5)
-IO.puts(SomeFunction.thrd(5,5))
+Sumatory.consum(2)
+IO.puts Fibonacci.fibo(22)
+Pyramid.pir(5)
+IO.puts SomeFunction.call(2,2)
