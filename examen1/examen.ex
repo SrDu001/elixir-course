@@ -16,27 +16,42 @@ defmodule Exam do
   defp sumListp(_, resultList, sum), do: resultList ++ [sum]
   defp sumListp([h | t]), do: sumListp(t, [h], Enum.at(t, 0) + h)
 
-
-
-  # def sumListReduce(list) when is_list(list), do: reduce(list)
-  #def sum(list) when is_list(list), do: reduce(list, 0, &(&1 + &2))
-
-  #def reduce(list, acc, action) when is_list(list) and is_function(action, 2) do
-  #  reducep(list, acc,action)
-  #end
-
-  #defp reducep([] , acc, _), do: acc
- # defp reducep( [h | t], acc, action), do: reducep(t, action.(h, acc), action)
-
   def descendant?(list \\ []) when is_list(list), do: descendant_p?(nil, list)
   defp descendant_p?(_, []), do: true
   defp descendant_p?(nil, [b | tail]), do: descendant_p?(b, tail)
   defp descendant_p?(a, [b | tail]) when a >= b, do: descendant_p?(b, tail)
   defp descendant_p?(_, _), do: false
 
+  def sumListRed(list) when is_list(list), do: map(list, &(&1 + &2))
+
+  defp map(list, transform) when is_list(list) and is_function(transform, 2) do
+    reduce(list, [0], fn t, acc -> acc ++ [transform.(List.last(items), t)] end)
+  end
+
+  def reduce(list, acc, action) when is_list(list) and is_function(action, 2) do
+    reducep(list, acc,action)
+  end
+
+  defp reducep([] , acc, _), do: acc
+  defp reducep([h | t], acc, action), do: reducep(t, action.(h, acc), action)
+
+
+  def descendantRed?(list \\ []) when is_list(list), do: mapdes(list, &(&1 >= &2))
+
+  defp mapdes(list, transform) when is_list(list) and is_function(transform, 2) do
+    reduce2(list, fn h, t -> [{:a, h}, {:b, Enum.at(tl(t), 0)}] end, fn [h | t], acc -> transform.(acc.(h, t)) end)
+  end
+
+  def reduce2(list, acc, action) when is_list(list) and is_function(action, 2) and is_function(acc, 2) do
+    reducep2(list, acc,action)
+  end
+
+  defp reducep2([] , acc, _), do: acc
+  defp reducep2([h | t], acc, action), do: reducep2(t, action.(t, acc), action)
+
 end
 
 IO.inspect(Exam.sumList([1, 3, 4, -1]))
 IO.inspect(Exam.descendant?([5, 4, 3, 2]))
 IO.inspect(Exam.descendant?([5, 4, 3, 6]))
-IO.inspect(Exam.descendant?([]))
+IO.inspect(Exam.descendantRed?([5, 4, 3, 2]))

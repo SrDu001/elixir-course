@@ -27,3 +27,5 @@ end
 # [2, 4]
 # iex(4)> MyMapReduce.double([1, 3, 2])
 # [2, 6, 4]
+IO.inspect MyMapReduce.double([1, 2])
+#IO.puts MyMapReduce.sum([1, 2])

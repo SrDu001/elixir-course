@@ -32,7 +32,7 @@ defmodule Factorial do
   # Acc(n, k) = Acc(n, k-1) * (n - k + 1)
   def fac2(n) when is_integer(n) and n >= 0 do
     cond do
-      n < 1-> 1
+      n < 1 -> 1
       true -> facp2(n - 1, n)
     end
   end
