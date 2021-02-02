@@ -52,7 +52,7 @@ defmodule Exam do
 end
 
 IO.inspect(Exam.sumListRed([1, 3, 4, -1]))
-#IO.inspect(Exam.sumList([1, 3, 4, -1]))
-#IO.inspect(Exam.descendant?([5, 4, 3, 2]))
-#IO.inspect(Exam.descendant?([5, 4, 3, 6]))
-#IO.inspect(Exam.descendantRed?([5, 4, 3, 2]))
+IO.inspect(Exam.sumList([1, 3, 4, -1]))
+IO.inspect(Exam.descendant?([5, 4, 3, 2]))
+IO.inspect(Exam.descendant?([5, 4, 3, 6]))
+IO.inspect(Exam.descendantRed?([5, 4, 3, 2]))
