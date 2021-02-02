@@ -12,9 +12,11 @@
 
 defmodule Exam do
   def sumList(list) when is_list(list), do: sumListp(list)
-  defp sumListp([_ | t], resultList, sum) when length(t) > 0, do: sumListp(t, resultList ++ [sum], Enum.at(t, 0) + sum)
-  defp sumListp(_, resultList, sum), do: resultList ++ [sum]
-  defp sumListp([h | t]), do: sumListp(t, [h], Enum.at(t, 0) + h)
+  defp sumListp(list) when length(list) < 2, do: list
+  defp sumListp([h | t]), do: sumListp(t, [h], h)
+  defp sumListp([h | t], resultList, sum), do: sumListp(t, resultList ++ [sum + h], h + sum)
+  defp sumListp([], resultList, sum), do: resultList
+
 
   def descendant?(list \\ []) when is_list(list), do: descendant_p?(nil, list)
   defp descendant_p?(_, []), do: true
@@ -51,7 +53,10 @@ defmodule Exam do
 
 end
 
+IO.inspect(Exam.sumListRed([]))
 IO.inspect(Exam.sumListRed([1, 3, 4, -1]))
+IO.inspect(Exam.sumList([]))
+IO.inspect(Exam.sumList([1, 2]))
 IO.inspect(Exam.sumList([1, 3, 4, -1]))
 IO.inspect(Exam.descendant?([5, 4, 3, 2]))
 IO.inspect(Exam.descendant?([5, 4, 3, 6]))
