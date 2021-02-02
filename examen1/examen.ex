@@ -25,7 +25,7 @@ defmodule Exam do
   def sumListRed(list) when is_list(list), do: map(list, &(&1 + &2))
 
   defp map(list, transform) when is_list(list) and is_function(transform, 2) do
-    reduce(list, [0], fn t, acc -> acc ++ [transform.(List.last(items), t)] end)
+    reduce(list, [0], fn t, acc -> acc ++ [transform.(List.last(acc), t)] end)
   end
 
   def reduce(list, acc, action) when is_list(list) and is_function(action, 2) do
@@ -51,7 +51,8 @@ defmodule Exam do
 
 end
 
-IO.inspect(Exam.sumList([1, 3, 4, -1]))
-IO.inspect(Exam.descendant?([5, 4, 3, 2]))
-IO.inspect(Exam.descendant?([5, 4, 3, 6]))
-IO.inspect(Exam.descendantRed?([5, 4, 3, 2]))
+IO.inspect(Exam.sumListRed([1, 3, 4, -1]))
+#IO.inspect(Exam.sumList([1, 3, 4, -1]))
+#IO.inspect(Exam.descendant?([5, 4, 3, 2]))
+#IO.inspect(Exam.descendant?([5, 4, 3, 6]))
+#IO.inspect(Exam.descendantRed?([5, 4, 3, 2]))
