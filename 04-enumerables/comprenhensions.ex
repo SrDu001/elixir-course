@@ -1,3 +1,6 @@
+###
+list = for n <- [1, 2, 3, 4], do: n * n
+# Reading x
 x = 3
 list = for n <- [1, 2, 3, 4], do: n + x
 IO.inspect list # [4, 5, 6, 7] (as charlist)
@@ -64,3 +67,25 @@ IO.inspect list # [{104, 101, 108}, {108, 111, 32}, {119, 111, 114}]
 pixels = "hello world!!" # extra characted is ignored
 list = for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}
 IO.inspect list # [{104, 101, 108}, {108, 111, 32}, {119, 111, 114}, {108, 100, 33}]
+
+##
+map = %{"a" => 1, "b" => 2, "c" => 3}
+list = for {k, v} <- map, do: {k, v + 1}
+IO.inspect list # [{"a", 2}, {"b", 3}, {"c", 4}]
+
+incremented_map = for {k, v} <- map, into: %{}, do: {k, v + 1}
+IO.inspect list # %{"a" => 2, "b" => 3, "c" => 4}
+
+# :uniq
+values = [1, 2, 1, 3, 4, 2, 5]
+list = for n <- values, uniq: true, do: n + 3
+IO.inspect list # [4, 5, 6, 7, 8]
+
+#
+text = "AbcaBCabC"
+letters = for <<c <- text>>, c in ?a..?z, do: <<c>>
+Enum.reduce(letters, %{}, fn c, acc -> Map.update(acc, c, 64, &(&1 + 1)) end)
+
+letters = for <<c <- text>>, c in ?a..?z, reduce: %{} do
+  acc -> Map.update(acc, <<c>>, 64, &(&1  + 1))
+end

@@ -1,10 +1,10 @@
-defmodule FObs do
+defmodule Obs do
   @spec create(integer()) :: pid()
   def create(initialState \\ 0) do
     spawn(__MODULE__, :listen, [{[], initialState}])
   end
 
-  defp listen({observers, state}) do
+  def listen({observers, state}) do
     receive do
       event ->
           #{observers, state} = on_event(event, observers, state)
@@ -58,13 +58,3 @@ defmodule FObs do
   def decrement(subject), do: send(subject, {:decrement})
 
 end
-
-  # subject = %Observable{pid: subject_pid}
-  # subject.attach(pid)
-  # subject.attach()
-  # subject.detach(pid)
-  # subject.detach()
-  # subject.read()
-  # subject.await()
-  # subject.increment()
-  # subject.decrement()

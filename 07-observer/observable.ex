@@ -1,5 +1,5 @@
 defmodule Observable do
-  @spec create(integer() :: pid())
+  @spec create(integer()) :: pid()
   def create(initialState \\ 0) do
     spawn(__MODULE__, :listen, [[], initialState])
   end
