@@ -48,7 +48,7 @@ defmodule Sigils do
 
     t1 = ~T[14:31:53.0]
     t2 = ~T[14:31:53]
-    t2 = %Time{hour: 14, minute: 31, second: 53}
+    t3 = %Time{hour: 14, minute: 31, second: 53}
     IO.puts t1 === t2 # true
     IO.puts t1 === t3 # true
 
@@ -60,5 +60,11 @@ defmodule Sigils do
     %DateTime{minute: m, time_zone: tz, utc_offset: uo, std_offset: so} = dt
     IO.puts(m) # 31
     IO.puts(tz) # Etc/UTC
+    IO.puts(uo)
+    IO.puts(so)
   end
+
+  def sigil_i(string, []), do: String.to_integer(string)
+  def sigil_i(string, [?n]), do: -String.to_integer(string)
+  def sigil_i(string, [?a]), do: string |> String.to_integer() |> abs()
 end
