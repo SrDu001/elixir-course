@@ -124,3 +124,27 @@ catch
 end
 
 IO.puts sum
+
+
+####
+how_large_is = fn x ->
+  try do
+    1 / x
+  rescue
+    ArithmeticError -> :infinity
+  catch
+    e -> IO.puts e
+  else
+    d when d < 1 and d > -1 -> :small
+    d when d < 10 and d > -10 -> :middle
+    _ -> :large
+  after
+    IO.puts "Hello"
+  end
+end
+
+how_large_is.(0) # Hello :infinity
+how_large_is.(1) # Hello :middle
+how_large_is.(2) # Hello :small
+how_large_is.(0.5) # Hello :middle
+how_large_is.(0.1) # Hello :large
