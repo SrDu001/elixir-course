@@ -16,7 +16,7 @@ defmodule KV do
 
   @vsn 2
 
-  @initial_state %{:hello, "World"}
+  @initial_state %{hello: "World"}
 
   @doc """
   Creates a pid to read and create/update a key-value pair
@@ -50,7 +50,7 @@ defmodule KV do
       :ok
   """
   def update(kv_pid, key, value)  do
-    Agent.update(kv_pid, fm map -> Map.put(mpa, key, value) end)
+    Agent.update(kv_pid, fn map -> Map.put(map, key, value) end)
   end
 end
 
@@ -60,11 +60,11 @@ end
 
 # value = kv.read(:hello)
 # print(value)
-value = KV.read(kv, :hello
+value = KV.read(kv, :hello)
 IO.inspect value # nil
 
 # kv.update(:hello, "World")
-KV.update(kv, :hello. "World")
+KV.update(kv, :hello, "World")
 
 # value = kv.read(:hello)
 # print(value)
