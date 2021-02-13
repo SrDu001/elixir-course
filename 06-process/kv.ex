@@ -38,7 +38,7 @@ KV.request(kv, :hello)
 value = receive do
   value -> value
 end
-IO.inspect value
+IO.inspect value #nil
 
 # value = kv.read(:hello)
 # print(value)
