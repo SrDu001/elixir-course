@@ -7,9 +7,12 @@ defmodule Balance.Application do
 
   @impl true
   def start(_type, _args) do
+    port = String.to_integer(System.get_env("PORT") || "8000")
     children = [
       # Starts a worker by calling: Balance.Worker.start_link(arg)
       # {Balance.Worker, arg}
+      {Task.Supervisor, name: Balance.TaskSupervisor},
+      {Task, fn -> (Balance.Server.accept(port)) end}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

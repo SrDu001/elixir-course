@@ -1,8 +1,9 @@
-defmodule KVServer do
+defmodule Balance.Server do
   require Logger
 
   def accept(port) do
     {:ok, socket} = :gen_tcp.listen(port, [:binary, packet: :line, active: false, reuseaddr: true])
+    Balance.Supervisor.start_link([])
     Logger.info("Aceptando conexiones en el puerto #{port}")
     loop_acceptor(socket)
   end
@@ -17,8 +18,8 @@ defmodule KVServer do
     msg = case read_line(socket) do
       {:ok, data} ->
         Logger.info("Mensaje: #{data}")
-        case KVServer.Command.parse(data) do
-          {:ok, command} -> KVServer.Command.run(command)
+        case Balance.Command.parse(data) do
+          {:ok, action} -> Balance.Command.run(action)
           {:error, _} = err -> err
         end
       {:error, _} = err -> err
@@ -35,7 +36,7 @@ defmodule KVServer do
   end
 
   defp write_line({:ok, line}, socket) do
-    :gen_tcp.send(socket, "Respuesta: #{line}")
+    :gen_tcp.send(socket, "Your current balance is: #{line}")
   end
 
   defp write_line({:error, :close}, _socket) do
@@ -44,6 +45,10 @@ defmodule KVServer do
 
   defp write_line({:error, :unknown_command}, socket) do
     :gen_tcp.send(socket, "UNKNOWN COMMAND\r\n")
+  end
+
+  defp write_line({:error, :ilegal_expression}, socket) do
+    :gen_tcp.send(socket, "ILEGAL EXPRESSION\r\n")
   end
 
   defp write_line({:error, err}, socket) do
