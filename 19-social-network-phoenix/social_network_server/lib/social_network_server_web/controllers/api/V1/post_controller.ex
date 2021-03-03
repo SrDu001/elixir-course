@@ -21,15 +21,5 @@ defmodule SocialNetworkServerWeb.Api.V1.PostController do
     posts = Post.get_friends_posts(userid, offset, limit)
     result_list = Enum.map(posts, fn post -> %{id: post.id, content: post.content, date: post.date, user_id: post.user_id} end )
     json(conn, result_list)
-    #case query_params["format"] do
-    #  "json" -> json(conn, %{id: messenger})
-    #  "text" -> text(conn, "From messenger #{messenger}")
-    #  _      ->
-    #    conn
-    #    |> put_flash(:info, "Welcome to Phoenix, from flash info!")
-    #    |> put_flash(:error, "Let's pretend we have an error.")
-    #    |> render("show.html", messenger: messenger)
-    #end
   end
-
 end
