@@ -3,7 +3,7 @@ defmodule SocialNetworkServerWeb.Api.V1.PostController do
 
   alias SocialNetworkServer.Post
 
-   def create(%Plug.Conn{query_params: query_params} = conn, %{"user_id" => userid}) do
+   def create(conn, %{"user_id" => userid}) do
     %{"content" => content} = conn.body_params
     post = Post.create_post(userid, content)
     json(conn, %{
