@@ -24,9 +24,9 @@ defmodule SocialNetworkServerWeb.Router do
     pipe_through :api
 
     scope "/v1", V1, as: :v1 do
-      resources "/users", UserController, only: [:new, :show, :create] do
+      resources "/users", UserController, only: [:show, :create] do
         resources "/posts", PostController, only: [:new, :show, :create, :index]
-        resources "/friends", FriendController, only: [:new, :show, :create]
+        resources "/friends", FriendController, only: [:create]
       end
     end
   end

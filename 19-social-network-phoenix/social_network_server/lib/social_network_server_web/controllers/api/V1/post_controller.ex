@@ -2,17 +2,16 @@ defmodule SocialNetworkServerWeb.Api.V1.PostController do
   use SocialNetworkServerWeb, :controller
 
   alias SocialNetworkServer.Post
-  alias SocialNetworkServerWeb.Router.Helpers, as: Routes
 
-  def create(conn, %{"userid" => userid, "content" => content}) do
-    case Post.create_post(userid, content) do
-      {:ok, _} ->
-        conn
-        |> put_flash(:info, "Post created successfully.")
-        |> redirect(to: Routes.page_path(WebpackPostgresWeb.Endpoint, :index))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
+   def create(%Plug.Conn{query_params: query_params} = conn, %{"user_id" => userid}) do
+    %{"content" => content} = conn.body_params
+    post = Post.create_post(userid, content)
+    json(conn, %{
+      id: post.id,
+      content: post.content,
+      date: post.date,
+      user_id: post.user_id
+    })
   end
 
   def index(%Plug.Conn{query_params: query_params} = conn, %{"user_id" => userid}) do

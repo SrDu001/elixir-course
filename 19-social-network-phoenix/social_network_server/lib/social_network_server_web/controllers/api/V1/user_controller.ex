@@ -2,7 +2,6 @@ defmodule SocialNetworkServerWeb.Api.V1.UserController do
   use SocialNetworkServerWeb, :controller
 
   alias SocialNetworkServer.User
-  alias SocialNetworkServerWeb.Router.Helpers, as: Routes
 
   def create(conn, _params) do
     %{"name" => name, "nick_name" => nick_name, "email" => email, "password" => password} = conn.body_params
