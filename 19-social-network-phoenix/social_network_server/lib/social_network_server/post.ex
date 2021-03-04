@@ -27,11 +27,5 @@ defmodule SocialNetworkServer.Post do
       offset: ^offset,
       limit: ^limit
     Repo.all(query)
-#   Weather
-#   |> where(city: "Kraków")
-#   |> order_by(:temp_lo)
-#   |>
-#   |> Repo.all
-
   end
 end

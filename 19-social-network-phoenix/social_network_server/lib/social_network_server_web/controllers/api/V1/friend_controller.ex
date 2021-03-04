@@ -3,7 +3,7 @@ defmodule SocialNetworkServerWeb.Api.V1.FriendController do
 
   alias SocialNetworkServer.Friend
 
-  def create(%Plug.Conn{query_params: query_params} = conn, %{"user_id" => userid}) do
+  def create(conn, %{"user_id" => userid}) do
     %{"friend_id" => friendid} = conn.body_params
     {:ok, friend} = Friend.add_friend(userid, friendid)
     json(conn, %{
@@ -11,5 +11,11 @@ defmodule SocialNetworkServerWeb.Api.V1.FriendController do
       user_id: friend.user_id,
       friend_id: friend.friend_id
     })
+  end
+
+  def index(conn, %{"user_id" => userid}) do
+    friends = Friend.get_user_friends(userid)
+    result_list = Enum.map(friends, fn friend -> %{id: friend.id, friend_id: friend.friend_id, name: friend.friend.name} end)
+    json(conn, result_list)
   end
 end

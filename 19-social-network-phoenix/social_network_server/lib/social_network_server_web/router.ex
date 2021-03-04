@@ -26,7 +26,7 @@ defmodule SocialNetworkServerWeb.Router do
     scope "/v1", V1, as: :v1 do
       resources "/users", UserController, only: [:show, :create] do
         resources "/posts", PostController, only: [:new, :show, :create, :index]
-        resources "/friends", FriendController, only: [:create]
+        resources "/friends", FriendController, only: [:index, :show]
       end
     end
   end
